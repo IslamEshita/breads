@@ -1,17 +1,20 @@
-// DEPENDENCIES
+// Bringing in required modules
 const express = require('express')
+const dotenv = require('dotenv')
 
-// CONFIGURATION
-require('dotenv').config()
+// Configure environment variable
+dotenv.config()
 const PORT = process.env.PORT
+
+// Create the express app
 const app = express()
 
-// ROUTES
+// Add routes
 app.get('/', (req, res) => {
-  res.send('Welcome to an Awesome App about Breads!')
+  res.send('Hello Bread CRUD app!')
 })
 
-// LISTEN
+// Listen on port
 app.listen(PORT, () => {
-  console.log('listening on port', PORT);
+  console.log('Listening on port', PORT);
 })

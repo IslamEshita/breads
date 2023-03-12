@@ -1,15 +1,15 @@
 const express = require('express')
 const breads = express.Router()
-const Bread = require('../models/bread')
+const allBreads = require('../models/bread')
 
 // INDEX
 breads.get('/', (req, res) => {
-  res.send(Bread)
+  res.send(allBreads)
 })
 
 // SHOW
 breads.get('/:arrayIndex', (req, res) => {
-  res.send(Bread[req.params.arrayIndex])
+  res.send(allBreads[req.params.arrayIndex])
 })
 
 

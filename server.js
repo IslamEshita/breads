@@ -10,9 +10,16 @@ const PORT = process.env.PORT
 const app = express()
 
 // Add routes
+
+// Home
 app.get('/', (req, res) => {
   res.send('Hello Bread CRUD app!')
 })
+
+// Breads
+const breadsController = require('./controllers/breads_controller');
+app.use('/breads', breadsController);
+
 
 // Listen on port
 app.listen(PORT, () => {

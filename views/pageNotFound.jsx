@@ -10,5 +10,4 @@ function PageNotFound () {
       )
   }
   
-
 module.exports = PageNotFound

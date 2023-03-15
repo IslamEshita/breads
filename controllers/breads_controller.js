@@ -13,9 +13,13 @@ breads.get("/", (req, res) => {
 
 // Show one bread
 breads.get("/:arrayIndex", (req, res) => {
-  res.render("Show", {
-    bread: allBreads[req.params.arrayIndex],
-  });
+  if (allBreads[req.params.arrayIndex]) {
+    res.render("Show", {
+      bread: allBreads[req.params.arrayIndex],
+    });
+  } else {
+    res.render("PageNotFound");
+  }
 });
 
 module.exports = breads;

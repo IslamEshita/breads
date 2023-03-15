@@ -11,9 +11,11 @@ breads.get("/", (req, res) => {
   // res.send(Bread)
 });
 
-// Get one bread
+// Show one bread
 breads.get("/:arrayIndex", (req, res) => {
-  res.send(allBreads[req.params.arrayIndex]);
+  res.render("Show", {
+    bread: allBreads[req.params.arrayIndex],
+  });
 });
 
 module.exports = breads;

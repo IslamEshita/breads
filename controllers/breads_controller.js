@@ -15,11 +15,18 @@ breads.get("/new", (req, res) => {
   res.render("New");
 });
 
+// Delete a bread
+breads.delete("/:id", (req, res) => {
+  allBreads.splice(req.params.id, 1);
+  res.status(303).redirect("/breads");
+});
+
 // Show one bread
 breads.get("/:arrayIndex", (req, res) => {
   if (allBreads[req.params.arrayIndex]) {
     res.render("Show", {
       bread: allBreads[req.params.arrayIndex],
+      index: req.params.arrayIndex,
     });
   } else {
     res.render("PageNotFound");

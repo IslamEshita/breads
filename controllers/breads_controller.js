@@ -10,14 +10,33 @@ breads.get("/", (req, res) => {
   });
 });
 
+// UPDATE
+breads.put("/:arrayIndex", (req, res) => {
+  if (req.body.hasGluten === "on") {
+    req.body.hasGluten = true;
+  } else {
+    req.body.hasGluten = false;
+  }
+  allBreads[req.params.arrayIndex] = req.body;
+  res.redirect(`/breads/${req.params.arrayIndex}`);
+});
+
+// EDIT
+breads.get("/:indexArray/edit", (req, res) => {
+  res.render("Edit", {
+    bread: allBreads[req.params.indexArray],
+    index: req.params.indexArray,
+  });
+});
+
 // NEW
 breads.get("/new", (req, res) => {
   res.render("New");
 });
 
 // Delete a bread
-breads.delete("/:id", (req, res) => {
-  allBreads.splice(req.params.id, 1);
+breads.delete("/:arrayIndex", (req, res) => {
+  allBreads.splice(req.params.arrayIndex, 1);
   res.status(303).redirect("/breads");
 });
 

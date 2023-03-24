@@ -4,9 +4,11 @@ const allBreads = require("../models/bread");
 
 // Get all breads
 breads.get("/", (req, res) => {
-  res.render("Index", {
-    breads: allBreads,
-    title: "Index Page",
+  allBreads.find().then((foundBreads) => {
+    res.render("Index", {
+      breads: foundBreads,
+      title: "Index Page",
+    });
   });
 });
 
@@ -35,35 +37,37 @@ breads.get("/new", (req, res) => {
 });
 
 // Delete a bread
-breads.delete("/:arrayIndex", (req, res) => {
-  allBreads.splice(req.params.arrayIndex, 1);
-  res.status(303).redirect("/breads");
+breads.delete("/:id", (req, res) => {
+  allBreads.findByIdAndDelete(req.params.id).then((deleteBread) => {
+    res.status(303).redirect("/breads");
+  });
 });
 
 // Show one bread
-breads.get("/:arrayIndex", (req, res) => {
-  if (allBreads[req.params.arrayIndex]) {
-    res.render("Show", {
-      bread: allBreads[req.params.arrayIndex],
-      index: req.params.arrayIndex,
+breads.get("/:id", (req, res) => {
+  allBreads
+    .findById(req.params.id)
+    .then((foundBread) => {
+      res.render("show", {
+        bread: foundBread,
+      });
+    })
+    .catch((err) => {
+      res.send("404");
     });
-  } else {
-    res.render("PageNotFound");
-  }
 });
 
 // Create a new bread
 breads.post("/", (req, res) => {
   if (!req.body.image) {
-    req.body.image =
-      "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80";
+    req.body.image = undefined;
   }
   if (req.body.hasGluten === "on") {
     req.body.hasGluten = true;
   } else {
     req.body.hasGluten = false;
   }
-  allBreads.push(req.body);
+  allBreads.create(req.body);
   res.redirect("/breads");
 });
 

@@ -2,8 +2,7 @@ const React = require('react')
 const Default = require('./layouts/Default')
 
 function Show ({bread}) {
-      return (
-        <Default>
+      return (         <Default>
             <h3>{bread.name}</h3>
             <p>
                 and it
@@ -15,6 +14,7 @@ function Show ({bread}) {
                 have gluten.
             </p>
             <img src={bread.image} alt={bread.name} />
+            <p>Baked by {bread.baker}</p>
             <li><a href="/breads">Go home</a></li>            
             <a href={`/breads/${bread.id}/edit`}><button>Edit</button></a>
             <form action={`/breads/${bread.id}?_method=DELETE`} method="POST">             

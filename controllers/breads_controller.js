@@ -52,6 +52,8 @@ breads.get("/:id", (req, res) => {
   allBreads
     .findById(req.params.id)
     .then((foundBread) => {
+      const bakedBy = foundBread.getBakedBy();
+      console.log(bakedBy);
       res.render("show", {
         bread: foundBread,
       });

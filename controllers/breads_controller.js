@@ -1,6 +1,7 @@
 const express = require("express");
 const breads = express.Router();
 const allBreads = require("../models/bread");
+const Baker = require("../models/baker");
 
 // Get all breads
 breads.get("/", (req, res) => {
@@ -28,16 +29,23 @@ breads.put("/:id", (req, res) => {
 
 // EDIT
 breads.get("/:id/edit", (req, res) => {
-  allBreads.findById(req.params.id).then((foundBread) => {
-    res.render("edit", {
-      bread: foundBread,
+  Baker.find().then((foundBakers) => {
+    allBreads.findById(req.params.id).then((foundBread) => {
+      res.render("edit", {
+        bread: foundBread,
+        bakers: foundBakers,
+      });
     });
   });
 });
 
-// NEW
+// New
 breads.get("/new", (req, res) => {
-  res.render("New");
+  Baker.find().then((foundBakers) => {
+    res.render("new", {
+      bakers: foundBakers,
+    });
+  });
 });
 
 // Delete a bread
@@ -51,6 +59,7 @@ breads.delete("/:id", (req, res) => {
 breads.get("/:id", (req, res) => {
   allBreads
     .findById(req.params.id)
+    .populate("baker")
     .then((foundBread) => {
       const bakedBy = foundBread.getBakedBy();
       console.log(bakedBy);

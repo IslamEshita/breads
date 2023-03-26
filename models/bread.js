@@ -21,7 +21,6 @@ breadSchema.methods.getBakedBy = function () {
     if (this.baker.startDate) {
       startyear = this.baker.startDate.getFullYear();
     }
-
     return `${this.name} was baked with love by ${this.baker.name}, who has been with us since ${startyear}`;
   } else {
     return `${this.name} was baked with love by some unknown baker`;

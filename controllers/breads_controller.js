@@ -5,10 +5,13 @@ const Baker = require("../models/baker");
 
 // Get all breads
 breads.get("/", (req, res) => {
-  allBreads.find().then((foundBreads) => {
-    res.render("Index", {
-      breads: foundBreads,
-      title: "Index Page",
+  Baker.find().then((foundBakers) => {
+    allBreads.find().then((foundBreads) => {
+      res.render("Index", {
+        breads: foundBreads,
+        bakers: foundBakers,
+        title: "Index Page",
+      });
     });
   });
 });

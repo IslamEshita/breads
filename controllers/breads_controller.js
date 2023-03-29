@@ -4,15 +4,13 @@ const allBreads = require("../models/bread");
 const Baker = require("../models/baker");
 
 // Get all breads
-breads.get("/", (req, res) => {
-  Baker.find().then((foundBakers) => {
-    allBreads.find().then((foundBreads) => {
-      res.render("Index", {
-        breads: foundBreads,
-        bakers: foundBakers,
-        title: "Index Page",
-      });
-    });
+breads.get("/", async (req, res) => {
+  const foundBakers = await Baker.find().lean();
+  const foundBreads = await allBreads.find().limit(2).lean();
+  res.render("Index", {
+    breads: foundBreads,
+    bakers: foundBakers,
+    title: "Index Page",
   });
 });
 
